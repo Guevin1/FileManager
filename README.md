@@ -6,6 +6,7 @@
 ```shell
 sudo apt install sqlite3
 ```
+
 Скачивание репозитория
 ```shell
 git clone https://github.com/Guevin1/FileManager.git
