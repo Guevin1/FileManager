@@ -13,11 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        if (!\Storage::drive("local")->exists("files")) {
+            \Storage::drive("local")->makeDirectory("files");
+            \Storage::drive("files")->put("readme.txt","Спасибо что пользуетесь мои FileManager!");
+        }
     }
 }
