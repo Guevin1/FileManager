@@ -87,7 +87,7 @@ function clearSelection() {
 </script>
 
 <template>
-    <tr class="text-white"  @mousedown="handleMouseDown" :path="URLpath" @dblclick="open">
+    <tr class="text-white"  @mousedown="handleMouseDown" @click="" :path="URLpath" @dblclick="open">
         <td :style="'min-width: '+props.width   +'px'">
             <img :src="IconUrl" class="w-full" :alt="IconPath" @error="ErrorImage">
         </td>
@@ -112,6 +112,10 @@ function clearSelection() {
 <style scoped>
 td {
     padding:0 15px 0;
+}
+.selected {
+    background: rgba(33, 149, 137, 0.53);
+    box-shadow:inset 0px 0px 0px 1px #219589;
 }
 </style>
 

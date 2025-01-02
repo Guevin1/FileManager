@@ -40,10 +40,15 @@ let isFile = ref(false)
 let parentElement = ref()
 function contextMenuOpen(event: MouseEvent) {
     event.preventDefault()
-    console.log(event.target)
     let menu : HTMLElement = contextMenu.value as HTMLElement
     menu.classList.remove("hidden")
-    menu.style.top = event.clientY+"px"
+    let diff =window.innerHeight - event.clientY
+    if(diff < menu.offsetHeight) {
+        menu.style.top = event.clientY-menu.offsetHeight+"px"
+    }else {
+
+        menu.style.top = event.clientY+"px"
+    }
     menu.style.left = event.clientX+"px"
     let target : HTMLElement = event.target as HTMLElement
     parentElement.value = target.closest("[path]")
@@ -61,7 +66,6 @@ async function copyToClipboard(text : string) {
     }
 }
 function clickMenuButton(action : string) {
-    console.log(parentElement.value)
     let path = props.path
     let actionT = action+""
     if (parentElement.value != null) {
@@ -104,6 +108,12 @@ function mouseEnter() {
 function mouseLeave() {
     mouseEnterMenu = false
 }
+function menuCall(event: MouseEvent) {
+    closeMenu()
+    console.log(event.target)
+    
+}
+
 function closeMenu() {
     if (!mouseEnterMenu) {
         let menu : HTMLElement = contextMenu.value
@@ -115,7 +125,7 @@ function closeMenu() {
 
 <template>
     <Head :title="path+'/'"/>
-    <main class="h-[100vh]" @click="closeMenu">
+    <main class="h-[100vh] overflow-hidden" @click="menuCall">
         <HeaderLayout :path="path"></HeaderLayout>
         <section class="grid h-full overflow-scroll bg-[#18191d]" @contextmenu="contextMenuOpen">
             <table class="border-collapse h-min">
@@ -151,6 +161,9 @@ function closeMenu() {
   tr:nth-child(odd) {
     background: rgba(57, 57, 57, 0.4);
   }
+  tr:hover {
+      background: rgba(33, 149, 137, 0.23);
+  }
   .buttonMenu {
       padding: 5px 10px;
       text-align: left;
@@ -160,14 +173,14 @@ function closeMenu() {
   }
   .buttonMenu:hover {
       background: rgba(33, 149, 137, 0.53);
-      border: 1px solid #219589 ;
-
+      box-shadow:inset 0px 0px 0px 1px #219589;
   }
   .buttonMenu.disable {
       color: #4c5155;
   }
   .buttonMenu.disable:hover {
       background: rgba(0, 0, 0, 0.1);
+
       border: 1px solid rgba(0, 0, 0, 0.1);
   }
 </style>
