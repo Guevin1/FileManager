@@ -2,6 +2,10 @@
 Файловый менеджер создан для просмотра файлов загруженных на сервер
 ### Как его запустить!
 #### NGINX
+Установка sqllite (Можете поменять на свою бд в .env mariadb/pgsql/mysql)
+```shell
+sudo apt install sqlite3
+```
 Скачивание репозитория
 ```shell
 git clone https://github.com/Guevin1/FileManager.git
@@ -17,6 +21,11 @@ php artisan view:cache
 ```shell
 npm run build
 ```
+Создание нужных вещей для Laravel
+```shell
+php artisan migrate --seed
+```
+
 Редактирование конфигов nginx
 /etc/nginx/sites-enabled/<your_name>.conf
 ```
@@ -55,6 +64,7 @@ server {
 ```
 ### Docker
 Скачивание репозитория
+
 ```shell
 git clone https://github.com/Guevin1/FileManager.git
 cd FileManager
@@ -73,12 +83,19 @@ cd FileManager
 ```shell
 ./vendor/bin/sail npm run build
 ```
+Создание нужных вещей для Laravel
+```shell
+./vendor/bin/sail artisan migrate --seed
+```
 Сайт запустился http://localhost/
 ## Редактирование сайта
+Для редактирования нужен docker.
+
 Laravel 
 ```shell
 ./vendor/bin/sail up -d
 ```
+
 Vue.js
 ```shell
 ./vendor/bin/sail npm run dev
