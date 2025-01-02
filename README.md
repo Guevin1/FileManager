@@ -1,6 +1,12 @@
 # FileManager
 Файловый менеджер создан для просмотра файлов загруженных на сервер
-### Как его запустить!
+## Где папка с файлами?
+Путь до папки с файлами начиная с корня приложения
+`storage/app/private/files`
+
+Можно облегчить вам путь до неё путь через команду `ln  -sfn storage/app/private/files files`
+
+## Как его запустить!
 #### NGINX
 Установка sqllite (Можете поменять на свою бд в .env mariadb/pgsql/mysql)
 ```shell
@@ -12,26 +18,32 @@ sudo apt install sqlite3
 git clone https://github.com/Guevin1/FileManager.git
 cd FileManager
 ```
+Копирование .env
+```shell
+cp .env.example .env
+```
+
 Кэширование конфигов
 ```shell
+php artisan key:generate
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
-Установка зависимостей node js
-```shell
-npm install
-```
-
 Собирание сайта
 ```shell
+npm install
 npm run build
 ```
 Создание нужных вещей для Laravel
 ```shell
 php artisan migrate --seed
+php artisan storage:link
 ```
-
+Выдача прав на storage
+```shell
+sudo chmod 0777 -R ./storage/app
+```
 Редактирование конфигов nginx
 /etc/nginx/sites-enabled/<your_name>.conf
 ```
@@ -75,23 +87,31 @@ server {
 git clone https://github.com/Guevin1/FileManager.git
 cd FileManager
 ```
+Копирование .env
+```shell
+cp .env.example .env
+```
+
 поднятие контейнера с laravel
 ```shell
 ./vendor/bin/sail up -d
 ```
 Кэширование конфигов
 ```shell
+./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan config:cache
 ./vendor/bin/sail artisan route:cache
 ./vendor/bin/sail artisan view:cache
 ```
 Собирание сайта
 ```shell
+./vendor/bin/sail npm install
 ./vendor/bin/sail npm run build
 ```
 Создание нужных вещей для Laravel
 ```shell
 ./vendor/bin/sail artisan migrate --seed
+./vendor/bin/sail artisan storage:link
 ```
 Сайт запустился http://localhost/
 ## Редактирование сайта
